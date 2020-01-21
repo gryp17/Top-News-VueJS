@@ -35,6 +35,7 @@
 						:totalItems="totalArticles"
 						:totalPages="totalArticlesPages"
 						@getItemsForPage="getUserArticles(user.id, $event)"
+						@deleteArticle="handleDeleteArticle"
 					/>
 				</div>
 				<div class="tab-pane fade" id="activity" role="tabpanel" aria-labelledby="activity-tab">
@@ -114,7 +115,8 @@
 				'getUser'
 			]),
 			...mapActions('articles', [
-				'getArticlesByAuthor'
+				'getArticlesByAuthor',
+				'deleteArticle'
 			]),
 			...mapActions('comments', [
 				'getCommentsByAuthor'
@@ -162,6 +164,15 @@
 				return this.getCommentsByAuthor(params).then((commentsData) => {
 					this.totalComments = commentsData.total;
 					this.totalCommentsPages = Math.ceil(this.totalComments / this.commentsPerPage);
+				});
+			},
+			/**
+			 * Deletes the passed article id and reloads the articles list
+			 * @param {Number} id
+			 */
+			handleDeleteArticle(id) {
+				this.deleteArticle({ id }).then(() => {
+					this.getUserArticles(this.user.id, 0);
 				});
 			}
 		}

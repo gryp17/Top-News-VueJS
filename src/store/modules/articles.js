@@ -115,6 +115,15 @@ export default {
 					message: 'Failed to fetch the articles by author'
 				});
 			});
+		},
+		deleteArticle(context, { id }) {
+			return ArticleService.delete(id).then((res) => {
+				return res.data;
+			}).catch(() => {
+				Vue.toasted.global.apiError({
+					message: 'Failed to delete the article'
+				});
+			});
 		}
 	}
 };

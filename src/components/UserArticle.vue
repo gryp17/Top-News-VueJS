@@ -27,7 +27,10 @@
 						Edit
 					</router-link>
 
-					<button class="dropdown-item">
+					<button
+						@click="deleteArticle"
+						class="dropdown-item"
+					>
 						Delete
 					</button>
 				</ActionsDropdown>
@@ -65,6 +68,14 @@
 			},
 			articleDateLong() {
 				return moment(this.article.date).format('YYYY-MM-DD HH:mm:ss');
+			}
+		},
+		methods: {
+			/**
+			 * Sends the 'deleteArticle' event with the current article id
+			 */
+			deleteArticle() {
+				this.$emit('deleteArticle', this.article.id);
 			}
 		}
 	};

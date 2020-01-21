@@ -11,6 +11,7 @@
 						<slot name="body">
 						</slot>
 					</div>
+					<slot name="footer"></slot>
 				</div>
 			</div>
 		</div>

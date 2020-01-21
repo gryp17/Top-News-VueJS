@@ -49,5 +49,29 @@ export default {
 	 */
 	getMostPopular(period, limit) {
 		return API.get(`/api/article/popular/${period}/${limit}`);
+	},
+	/**
+	 * Creates a new article
+	 * @param {Object} data
+	 * @returns {Promise}
+	 */
+	create(data) {
+		return API.post('/api/article', data);
+	},
+	/**
+	 * Updates an existing article
+	 * @param {Number} id
+	 * @param {Object} data
+	 * @returns {Promise}
+	 */
+	update(id, data) {
+		return API.put(`/api/article/${id}`, data);
+	},
+	/**
+	 * Deletes an existing article
+	 * @param {Number} id
+	 */
+	delete(id) {
+		return API.delete(`/api/article/${id}`);
 	}
 };

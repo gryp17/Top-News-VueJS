@@ -1,5 +1,6 @@
 const express = require('express');
 const fs = require('fs');
+const path = require('path');
 const async = require('async');
 
 const router = express.Router();
@@ -168,7 +169,7 @@ router.delete('/:id', (req, res, next) => {
 				return next(deleteErr);
 			}
 
-			let image = config.uploads.articles.directory + article.image;
+			let image = path.join(__dirname, '../../', config.uploads.articles.directory, article.image);
 			//remove all GET parameters from the path (if any)
 			image = image.replace(/\?.+/, '');
 

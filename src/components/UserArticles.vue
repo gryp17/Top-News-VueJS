@@ -13,6 +13,7 @@
 				:key="article.id"
 				:article="article"
 				:canEdit="canEdit"
+				@deleteArticle="showConfirmationDialog"
 			/>
 
 			<Pagination
@@ -22,17 +23,29 @@
 			/>
 		</div>
 
+		<ConfirmationDialog
+			:visible="confirmationDialogVisible"
+			@decline="hideConfirmationDialog"
+			@confirm="deleteArticle"
+		>
+			Are you sure you want to delete this article?
+			<br/>
+			<strong>This action is irreversible.</strong>
+		</ConfirmationDialog>
+
 	</div>
 </template>
 
 <script>
 	import UserArticle from '@/components/UserArticle.vue';
 	import Pagination from '@/components/Pagination.vue';
+	import ConfirmationDialog from '@/components/modals/ConfirmationDialog.vue';
 
 	export default {
 		components: {
 			UserArticle,
-			Pagination
+			Pagination,
+			ConfirmationDialog
 		},
 		props: {
 			canEdit: Boolean,
@@ -50,7 +63,34 @@
 				default: 0
 			}
 		},
+		data() {
+			return {
+				confirmationDialogVisible: false,
+				confirmedArticleId: null
+			};
+		},
 		methods: {
+			/**
+			 * Shows the confirmation dialog and sets the confirmed article id
+			 * @param {Number} articleId
+			 */
+			showConfirmationDialog(articleId) {
+				this.confirmedArticleId = articleId;
+				this.confirmationDialogVisible = true;
+			},
+			/**
+			 * Hides the confirmation dialog
+			 */
+			hideConfirmationDialog() {
+				this.confirmationDialogVisible = false;
+			},
+			/**
+			 * Emits the "deleteArticle" event with the confirmed article id
+			 */
+			deleteArticle() {
+				this.$emit('deleteArticle', this.confirmedArticleId);
+				this.hideConfirmationDialog();
+			},
 			/**
 			 * Sets the current page and loads the corresponding articles
 			 * @param {Number} page
