@@ -19,6 +19,11 @@ const routes = [
 		component: () => import(/* webpackChunkName: "search" */ '@/views/Search.vue')
 	},
 	{
+		path: '/article/:id/edit',
+		name: 'edit-article',
+		component: () => import(/* webpackChunkName: "article" */ '@/views/EditArticle.vue')
+	},
+	{
 		path: '/article/:id',
 		name: 'article',
 		component: () => import(/* webpackChunkName: "article" */ '@/views/Article.vue')
@@ -27,7 +32,7 @@ const routes = [
 		path: '/user/:id',
 		name: 'user',
 		component: () => import(/* webpackChunkName: "user" */ '@/views/User.vue')
-	}
+	},
 ];
 
 const router = new VueRouter({

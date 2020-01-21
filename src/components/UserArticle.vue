@@ -20,12 +20,12 @@
 				</div>
 
 				<ActionsDropdown v-if="canEdit">
-					<a
+					<router-link
+						:to="{name: 'edit-article', params: {id: article.id}}"
 						class="dropdown-item"
-						href="#"
 					>
 						Edit
-					</a>
+					</router-link>
 
 					<button class="dropdown-item">
 						Delete
