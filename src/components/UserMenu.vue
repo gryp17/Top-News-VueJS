@@ -13,13 +13,13 @@
 				My Profile
 			</router-link>
 
-			<a
+			<router-link
 				v-if="user.type === 'admin'"
+				:to="{name: 'add-article'}"
 				class="dropdown-item"
-				href="#"
 			>
-				Add article
-			</a>
+				Add Article
+			</router-link>
 
 			<div class="dropdown-divider"></div>
 
