@@ -1,0 +1,53 @@
+@import '_variables.scss';
+@import '~bootstrap/scss/bootstrap';
+
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.bubble.css';
+@import '~quill/dist/quill.snow.css';
+
+body{
+	background: $background;
+	background-size: $background-size;
+	font-family: $font-family;
+	color: $body-color;
+	
+	:focus {
+		outline:none;
+	}
+
+	::-moz-focus-inner {
+		border: 0;
+	}
+	
+	.form-control{
+		&:focus{
+			box-shadow: 0 0 0 1px rgba(0, 123, 255, 0.25);
+		}
+	}
+	
+	a, .btn-link{
+		color: $links-color;
+		
+		&:hover, &:focus, &:active{
+			text-decoration: none;
+			color: $links-color-active;
+		}
+	}
+	
+	.btn {
+		&.btn-primary-light{
+			@extend .btn-primary;
+			background-color: $links-color;
+		}
+	}
+
+	.toasted {
+		&.toasted-primary {
+			padding: 15px;
+		}
+
+		> svg:first-child {
+			margin-right: 10px;
+		}
+	}
+}

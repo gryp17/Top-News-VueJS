@@ -1,0 +1,33 @@
+//misc
+$background: url('/img/bg.jpg') no-repeat fixed;
+$background-size: cover;
+$layout-width: 1000px;
+
+
+//typography
+$font-family: "Open Sans", sans-serif;
+
+//colors
+$light-blue: #2196F3;
+$dark-blue: #0069d9;
+$dirty-blue: #6d8aa5;
+$red: #ff4b4b;
+$smooth-gray: #e2e2e2;
+$medium-gray: #7a797a;
+$dark-gray: #525252;
+$body-color: #333333;
+$links-color: $light-blue;
+$links-color-active: $dark-blue;
+
+$content-background-color: rgba(255, 255, 255, 0.95);
+
+$sections-colors: (
+	politics: #78909C,
+	economy: #2586E5,
+	world: #03937A,
+	technology: #366778,
+	sports: #0097A5
+);
+
+//bootstrap overrides
+$input-btn-focus-width: 1px;
