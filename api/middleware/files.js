@@ -27,7 +27,7 @@ module.exports = {
 		//add the "unlink" task before the "rename" one
 		if (req.session && req.session.user && req.session.user.avatar !== config.uploads.avatars.defaultAvatar) {
 			asyncTasks.push((done) => {
-				let oldAvatar = config.uploads.avatars.directory + req.session.user.avatar;
+				let oldAvatar = path.join(__dirname, '../', config.uploads.avatars.directory, req.session.user.avatar);
 
 				//remove all GET parameters from the path (if any)
 				oldAvatar = oldAvatar.replace(/\?.+/, '');
@@ -47,7 +47,7 @@ module.exports = {
 		asyncTasks.push((done) => {
 			const username = req.body.username ? req.body.username : req.session.user.username;
 			const avatar = `${md5(username) + new Date().getTime()}.${extension}`;
-			const destination = config.uploads.avatars.directory + avatar;
+			const destination = path.join(__dirname, '../', config.uploads.avatars.directory, avatar);
 
 			//move the temporal file to the real avatars directory
 			fs.rename(file.path, destination, (err) => {
