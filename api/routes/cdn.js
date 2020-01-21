@@ -15,14 +15,14 @@ router.get('/uploads/:type/:file', (req, res, next) => {
 		return res.sendStatus(404);
 	}
 
-	const filePath = config.uploads[type].directory + file;
+	const filePath = path.join(__dirname, '../', config.uploads[type].directory, file);
 
 	fs.stat(filePath, (err) => {
 		if (err) {
-			return res.sendStatus(404);;
+			return res.sendStatus(404);
 		}
 
-		res.sendFile(filePath, {root: path.join(__dirname, '../')});
+		res.sendFile(filePath);
 	});
 });
 
