@@ -45,6 +45,7 @@
 	import FormInput from '@/components/forms/FormInput.vue';
 	import FormFileInput from '@/components/forms/FormFileInput.vue';
 	import FormDropdown from '@/components/forms/FormDropdown.vue';
+	import ContentEditor from '@/components/forms/ContentEditor.vue';
 	import ScrollToTop from '@/components/ScrollToTop.vue';
 	import MainMenu from '@/components/MainMenu.vue';
 	import Footer from '@/components/Footer.vue';
@@ -61,6 +62,7 @@
 	Vue.component('FormInput', FormInput);
 	Vue.component('FormFileInput', FormFileInput);
 	Vue.component('FormDropdown', FormDropdown);
+	Vue.component('ContentEditor', ContentEditor);
 
 	export default {
 		components: {

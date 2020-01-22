@@ -51,6 +51,14 @@
 			placeholder="Summary"
 		/>
 
+		<ContentEditor
+			v-model="content"
+			:error="errors.content"
+			@focus="clearError"
+			label="Content"
+			name="content"
+		/>
+
 		<button class="btn btn-primary-light btn-save">
 			Save
 		</button>
@@ -111,7 +119,7 @@
 			imageChanged(e) {
 				this.image = e.target.files[0];
 				this.imagePreview = URL.createObjectURL(e.target.files[0]);
-			},
+			}
 		}
 	};
 </script>
