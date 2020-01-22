@@ -23,7 +23,7 @@
 
 			<div class="dropdown-divider"></div>
 
-			<button @click="logout" class="dropdown-item">
+			<button @click="onLogout" class="dropdown-item">
 				Logout
 			</button>
 		</ActionsDropdown>
@@ -47,7 +47,12 @@
 		methods: {
 			...mapActions('user', [
 				'logout'
-			])
+			]),
+			onLogout() {
+				this.logout().then(() => {
+					this.$router.push({ name: 'home' });
+				});
+			}
 		}
 	};
 </script>
