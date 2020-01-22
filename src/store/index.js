@@ -19,13 +19,13 @@ export default new Vuex.Store({
 	},
 	state: {
 		config: {},
-		sections: [
-			'politics',
-			'economy',
-			'world',
-			'technology',
-			'sports'
-		],
+		sections: {
+			1: 'politics',
+			2: 'world',
+			3: 'technology',
+			4: 'economy',
+			5: 'sports'
+		},
 		mainMenuOpened: false
 	},
 	getters: {

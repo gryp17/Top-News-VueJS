@@ -10,7 +10,7 @@
 
 		<div ref="sections" class="sections">
 			<router-link
-				v-for="section in sections"
+				v-for="section in Object.values(sections)"
 				@click.native="hideMainMenu()"
 				:key="section"
 				:to="{name: 'search', params: {section: section}}"

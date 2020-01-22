@@ -40,9 +40,11 @@
 	import { mapActions } from 'vuex';
 
 	import limitTo from '@/filters/limit-to';
+	import capitalize from '@/filters/capitalize';
 
 	import FormInput from '@/components/forms/FormInput.vue';
 	import FormFileInput from '@/components/forms/FormFileInput.vue';
+	import FormDropdown from '@/components/forms/FormDropdown.vue';
 	import ScrollToTop from '@/components/ScrollToTop.vue';
 	import MainMenu from '@/components/MainMenu.vue';
 	import Footer from '@/components/Footer.vue';
@@ -55,8 +57,10 @@
 
 	//global components and filters
 	Vue.filter('limitTo', limitTo);
+	Vue.filter('capitalize', capitalize);
 	Vue.component('FormInput', FormInput);
 	Vue.component('FormFileInput', FormFileInput);
+	Vue.component('FormDropdown', FormDropdown);
 
 	export default {
 		components: {

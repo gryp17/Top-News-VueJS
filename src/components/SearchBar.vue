@@ -81,7 +81,7 @@
 			 * @returns {Array}
 			 */
 			sections() {
-				return ['all news', ...this.$store.state.sections];
+				return ['all news', ...Object.values(this.$store.state.sections)];
 			},
 			/**
 			 * Builds the search input placeholder by using the selected section

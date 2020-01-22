@@ -7,7 +7,8 @@ export default {
 			login: {},
 			signup: {},
 			editProfile: {},
-			articleComment: {}
+			articleComment: {},
+			article: {}
 		}
 	},
 	mutations: {

@@ -1,5 +1,9 @@
 <template>
 	<div class="form-input form-group">
+		<label v-if="label">
+			{{ label }}
+		</label>
+
 		<div class="input-group">
 			<slot name="input-group-prepend"></slot>
 
@@ -26,6 +30,7 @@
 				:class="['form-control', className, {'is-invalid': error}]"
 				:name="name"
 				:placeholder="placeholder"
+				:rows="rows"
 				v-on="{
 					...$listeners,
 					input: onInput
@@ -44,6 +49,7 @@
 <script>
 	export default {
 		props: {
+			label: String,
 			tag: {
 				type: String,
 				default: 'input',
@@ -56,6 +62,9 @@
 			type: String,
 			placeholder: String,
 			name: String,
+			rows: {
+				default: 2
+			},
 			error: String
 		},
 		methods: {
