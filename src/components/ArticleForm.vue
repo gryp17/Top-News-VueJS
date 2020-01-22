@@ -135,7 +135,7 @@
 
 		.btn-save {
 			display: block;
-			margin: auto;
+			margin: 20px auto;
 		}
 	}
 </style>
