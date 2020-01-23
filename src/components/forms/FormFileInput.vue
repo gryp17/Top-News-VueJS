@@ -7,7 +7,7 @@
 			<button
 				@click="openFileBrowser()"
 				type="button"
-				class="btn btn-secondary browse-btn"
+				:class="['btn btn-secondary browse-btn', {'is-invalid': error}]"
 			>
 				<i class="fas fa-file-upload"></i>
 				Choose a file
@@ -55,6 +55,10 @@
 		.browse-btn{
 			display: block;
 			width: 100%;
+
+			&.is-invalid {
+				background-color: $red;
+			}
 
 			.fa-file-upload {
 				margin-right: 6px;

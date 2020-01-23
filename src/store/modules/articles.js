@@ -124,6 +124,15 @@ export default {
 					message: 'Failed to delete the article'
 				});
 			});
+		},
+		addArticle(context, data) {
+			return ArticleService.create(data).then((res) => {
+				return res.data;
+			}).catch(() => {
+				Vue.toasted.global.apiError({
+					message: 'Failed to create the article'
+				});
+			});
 		}
 	}
 };

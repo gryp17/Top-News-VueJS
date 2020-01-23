@@ -59,7 +59,7 @@
 			name="content"
 		/>
 
-		<button class="btn btn-primary-light btn-save">
+		<button @click="save" class="btn btn-primary-light btn-save">
 			Save
 		</button>
 	</div>
@@ -69,7 +69,9 @@
 	import { mapState, mapActions } from 'vuex';
 
 	export default {
-		props: {},
+		props: {
+			article: Object
+		},
 		data() {
 			return {
 				categoryId: 1,
@@ -95,6 +97,9 @@
 				'clearFormError',
 				'resetFormErrors'
 			]),
+			...mapActions('articles', [
+				'addArticle'
+			]),
 			/**
 			 * Clears the form errors related to this input
 			 * @param {Object} e
@@ -113,12 +118,40 @@
 				this.$refs.image.openFileBrowser();
 			},
 			/**
-			 * Updates the image and mage preview values whenever the selected file changes
+			 * Updates the image and image preview values whenever the selected file changes
 			 * @param {Object} e
 			 */
 			imageChanged(e) {
 				this.image = e.target.files[0];
 				this.imagePreview = URL.createObjectURL(e.target.files[0]);
+			},
+			/**
+			 * Saves/creates the article
+			 */
+			save() {
+				const formData = new FormData();
+
+				['categoryId', 'image', 'title', 'summary', 'content'].forEach((field) => {
+					if (this[field]) {
+						formData.append(field, this[field]);
+					}
+				});
+
+				this.addArticle(formData).then((data) => {
+					if (data.article) {
+						this.$router.push({
+							name: 'article',
+							params: {
+								id: data.article.id
+							}
+						});
+					} else if (data.errors) {
+						this.setFormErrors({
+							form: this.formName,
+							errors: data.errors
+						});
+					}
+				});
 			}
 		}
 	};

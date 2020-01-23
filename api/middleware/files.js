@@ -91,7 +91,7 @@ module.exports = {
 
 		const { title } = req.body;
 		const image = `${md5(title) + new Date().getTime()}.${extension}`;
-		const destination = config.uploads.articles.directory + image;
+		const destination = path.join(__dirname, '../', config.uploads.articles.directory, image);
 
 		//move the temporal file to the real images directory
 		fs.rename(file.path, destination, (err) => {
