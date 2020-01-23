@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const md5 = require('md5');
 const async = require('async');
+const ArticleModel = require('../models/article');
 
 module.exports = {
 	/**
@@ -79,28 +80,67 @@ module.exports = {
 	  * @param {Function} next
 	  */
 	uploadArticleImage(req, res, next) {
+		const asyncTasks = [];
 		const config = req.app.get('config');
 
-		const file = req.files.image;
-		const extension = path.extname(file.originalFilename).replace('.', '').toLowerCase();
-
 		//if no file has been submited
-		if (file.originalFilename.length === 0) {
+		if (!req.files.image) {
 			return next();
 		}
 
-		const { title } = req.body;
-		const image = `${md5(title) + new Date().getTime()}.${extension}`;
-		const destination = path.join(__dirname, '../', config.uploads.articles.directory, image);
+		//delete the old image (if it's being updated)
+		if (req.params.id) {
+			asyncTasks.push((done) => {
+				ArticleModel.getById(req.params.id, (err, article) => {
+					if (err) {
+						return done(err);
+					}
 
-		//move the temporal file to the real images directory
-		fs.rename(file.path, destination, (err) => {
+					if (!article) {
+						return done('Article not found');
+					}
+
+					let oldImage = path.join(__dirname, '../', config.uploads.articles.directory, article.image);
+
+					//remove all GET parameters from the path (if any)
+					oldImage = oldImage.replace(/\?.+/, '');
+
+					fs.unlink(oldImage, (unlinkErr) => {
+						if (unlinkErr) {
+							console.log(unlinkErr);
+							return done('Failed to delete the old image');
+						}
+						done();
+					});
+				});
+			});
+		}
+
+		//upload the article image
+		asyncTasks.push((done) => {
+			const file = req.files.image;
+			const extension = path.extname(file.originalFilename).replace('.', '').toLowerCase();
+			const { title } = req.body;
+			const image = `${md5(title) + new Date().getTime()}.${extension}`;
+			const destination = path.join(__dirname, '../', config.uploads.articles.directory, image);
+
+			//move the temporal file to the real images directory
+			fs.rename(file.path, destination, (err) => {
+				if (err) {
+					return done('Failed to upload the image');
+				}
+
+				//append the uploaded image to the files object
+				req.files.image.uploadedTo = `${image}?updated=${new Date().getTime()}`;
+
+				done();
+			});
+		});
+
+		async.series(asyncTasks, (err) => {
 			if (err) {
-				return next('Failed to upload the image');
+				return next(err);
 			}
-
-			//append the uploaded image to the files object
-			req.files.image.uploadedTo = `${image}?updated=${new Date().getTime()}`;
 
 			next();
 		});

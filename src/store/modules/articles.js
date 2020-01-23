@@ -133,6 +133,15 @@ export default {
 					message: 'Failed to create the article'
 				});
 			});
+		},
+		updateArticle(context, { id, data }) {
+			return ArticleService.update(id, data).then((res) => {
+				return res.data;
+			}).catch(() => {
+				Vue.toasted.global.apiError({
+					message: 'Failed to update the article'
+				});
+			});
 		}
 	}
 };

@@ -66,7 +66,7 @@
 </template>
 
 <script>
-	import { mapState, mapActions } from 'vuex';
+	import { mapState, mapGetters, mapActions } from 'vuex';
 
 	export default {
 		props: {
@@ -83,13 +83,32 @@
 				formName: 'article'
 			};
 		},
+		created() {
+			if (this.article) {
+				this.categoryId = this.article.categoryId;
+				this.imagePreview = this.articleImage;
+				this.title = this.article.title;
+				this.summary = this.article.summary;
+				this.content = this.article.content;
+			}
+		},
 		computed: {
+			...mapGetters([
+				'articlesDirectory'
+			]),
 			...mapState([
 				'sections'
 			]),
 			...mapState('form', {
 				errors: state => state.errors.article
-			})
+			}),
+			articleImage() {
+				if (!this.article) {
+					return null;
+				}
+
+				return `${this.articlesDirectory}${this.article.image}`;
+			}
 		},
 		methods: {
 			...mapActions('form', [
@@ -98,7 +117,8 @@
 				'resetFormErrors'
 			]),
 			...mapActions('articles', [
-				'addArticle'
+				'addArticle',
+				'updateArticle'
 			]),
 			/**
 			 * Clears the form errors related to this input
@@ -126,7 +146,7 @@
 				this.imagePreview = URL.createObjectURL(e.target.files[0]);
 			},
 			/**
-			 * Saves/creates the article
+			 * Creates/updates the article
 			 */
 			save() {
 				const formData = new FormData();
@@ -137,7 +157,8 @@
 					}
 				});
 
-				this.addArticle(formData).then((data) => {
+				const action = this.article ? this.updateArticle({ id: this.article.id, data: formData }) : this.addArticle(formData);
+				action.then((data) => {
 					if (data.article) {
 						this.$router.push({
 							name: 'article',

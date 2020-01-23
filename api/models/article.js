@@ -1,5 +1,6 @@
 const mysql = require('mysql');
 const moment = require('moment');
+const _ = require('lodash');
 const app = require('../server');
 
 const connection = mysql.createConnection(app.get('config').db);
@@ -44,7 +45,7 @@ module.exports = {
 	 * @param {Function} done
 	 */
 	getById(id, done) {
-		const query = 'SELECT article.id, authorId, title, summary, content, image, article.date, category.name as categoryName, user.username as authorName, user.avatar as authorAvatar, count(article_view.id) as views '
+		const query = 'SELECT article.id, authorId, title, summary, content, image, article.date, categoryId, category.name as categoryName, user.username as authorName, user.avatar as authorAvatar, count(article_view.id) as views '
 		+ 'FROM article LEFT JOIN article_view ON article.id = article_view.articleId, category, user '
 		+ 'WHERE article.categoryId = category.id AND user.id = article.authorId AND article.id = ? GROUP BY article.id';
 
@@ -150,6 +151,45 @@ module.exports = {
 					done(null, articleInstance);
 				});
 			});
+	},
+	/**
+	 * Updates the article record
+	 * @param {Number} id
+	 * @param {Object} data
+	 * @param {Function} done
+	 */
+	update(id, data, done) {
+		const self = this;
+		let fields = [];
+		const params = [];
+
+		_.forOwn(data, (value, key) => {
+			if (!value) {
+				return;
+			}
+
+			fields.push(`${key} = ?`);
+			params.push(value);
+		});
+
+		fields = fields.join(', ');
+
+		params.push(id);
+
+		connection.query(`UPDATE article SET ${fields} WHERE id = ?`, params, (err) => {
+			if (err) {
+				return done(err);
+			}
+
+			//return the updated record
+			self.getById(id, (getErr, articleInstance) => {
+				if (getErr) {
+					return done(getErr);
+				}
+
+				done(null, articleInstance);
+			});
+		});
 	},
 	/**
      * Deletes the specified article id

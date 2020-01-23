@@ -18,6 +18,13 @@ const rules = {
 		summary: ['required', 'min-3', 'max-500'],
 		content: ['required', 'min-50', 'max-10000'],
 		image: ['required', 'valid-article-image']
+	},
+	update: {
+		categoryId: ['in(1, 2, 3, 4, 5)'],
+		title: ['required', 'min-3', 'max-200'],
+		summary: ['required', 'min-3', 'max-500'],
+		content: ['required', 'min-50', 'max-10000'],
+		image: ['optional', 'valid-article-image']
 	}
 };
 
@@ -125,6 +132,31 @@ router.post('/', multipart(), Validator.validate(rules.create), Files.uploadArti
 
 	//create the new article
 	ArticleModel.create(data.categoryId, data.title, data.summary, data.content, req.files.image.uploadedTo, req.session.user.id, (err, articleInstance) => {
+		if (err) {
+			return next(err);
+		}
+
+		res.json({
+			article: articleInstance
+		});
+	});
+});
+
+//update the article record
+router.put('/:id', multipart(), Validator.validate(rules.update), Files.uploadArticleImage, (req, res, next) => {
+	const articleId = parseInt(req.params.id);
+	const { categoryId, title, summary, content } = req.body;
+	const image = req.files.image ? req.files.image.uploadedTo : null;
+
+	const updatedData = {
+		categoryId,
+		title,
+		summary,
+		content,
+		image
+	};
+
+	ArticleModel.update(articleId, updatedData, (err, articleInstance) => {
 		if (err) {
 			return next(err);
 		}
