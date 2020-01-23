@@ -21,12 +21,18 @@ npm run lint
 ```
 
 ## Back end Project setup
+
+### Import the sample database
+> [/api/db/database.sql](https://github.com/gryp17/Top-News-VueJS/blob/master/api/db/database.sql)
+
+
+### Install all dependencies
 ```
 cd $MYPROJECT_DIR/api
 npm install
 ```
 
-### Starts the backend/API server
+### Start the backend/API server
 ```
 npm run start-server
 ```
