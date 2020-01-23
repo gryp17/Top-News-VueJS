@@ -1,3 +1,8 @@
+/**
+ * Capitalizes the passed string
+ * @param {String} value
+ * @returns {Promise}
+ */
 export default (value) => {
 	if (!value) {
 		return '';

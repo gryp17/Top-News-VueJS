@@ -105,6 +105,9 @@
 			}
 		},
 		watch: {
+			/**
+			 * Watches the article value and updates the article data fields
+			 */
 			article() {
 				this.updateArticleData();
 			}

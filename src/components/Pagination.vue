@@ -62,6 +62,9 @@
 			this.calculatePages();
 		},
 		watch: {
+			/**
+			 * Watches all props and updates the pages
+			 */
 			$props: {
 				handler() {
 					this.calculatePages();

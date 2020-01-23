@@ -48,6 +48,9 @@
 			])
 		},
 		watch: {
+			/**
+			 * Watches the mainMenuOpened value and triggers the correct animation
+			 */
 			mainMenuOpened(value) {
 				if (value) {
 					$(this.$refs.sections).slideDown(SLIDE_DURATION);

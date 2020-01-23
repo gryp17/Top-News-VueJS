@@ -48,6 +48,9 @@
 			...mapActions('user', [
 				'logout'
 			]),
+			/**
+			 * Logs out the user and redirects to the home page
+			 */
 			onLogout() {
 				this.logout().then(() => {
 					this.$router.push({ name: 'home' });

@@ -213,6 +213,9 @@
 			}
 		},
 		watch: {
+			/**
+			 * Watches the route/url and updates the search params
+			 */
 			$route: {
 				deep: true,
 				handler(route) {

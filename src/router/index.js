@@ -70,6 +70,10 @@ const router = new VueRouter({
 	}
 });
 
+/**
+ * Returns the user session
+ * @returns {Promise}
+ */
 function getUserSession() {
 	if (store.state.user.userSession) {
 		return Promise.resolve(store.state.user.userSession);
@@ -80,6 +84,10 @@ function getUserSession() {
 	});
 }
 
+/**
+ * Checks if the user is an admin
+ * @returns {Promise}
+ */
 function userIsAdmin() {
 	if (store.state.user.userSession) {
 		return Promise.resolve(store.state.user.userSession.type === 'admin');

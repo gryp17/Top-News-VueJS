@@ -10,6 +10,9 @@
 			this.showWeather();
 		},
 		methods: {
+			/**
+			 * Loads the widget javascript
+			 */
 			showWeather() {
 				/* eslint-disable */
 				!function(d,s,id){
