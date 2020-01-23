@@ -121,6 +121,9 @@
 			...mapActions('comments', [
 				'getCommentsByAuthor'
 			]),
+			/**
+			 * Fetches all the necessary page data
+			 */
 			getData() {
 				this.getUser(this.$route.params.id).then((user) => {
 					if (!user) {
@@ -138,6 +141,12 @@
 					this.loading = false;
 				});
 			},
+			/**
+			 * Fetches the user articles
+			 * @param {Number} id
+			 * @param {Number} page
+			 * @returns {Promise}
+			 */
 			getUserArticles(id, page) {
 				this.articlesPage = page;
 
@@ -152,6 +161,12 @@
 					this.totalArticlesPages = Math.ceil(this.totalArticles / this.articlesPerPage);
 				});
 			},
+			/**
+			 * Fetches the user comments
+			 * @param {Number} id
+			 * @param {Number} page
+			 * @returns {Promise}
+			 */
 			getUserComments(id, page) {
 				this.commentsPage = page;
 
@@ -171,7 +186,7 @@
 			 * @param {Number} id
 			 */
 			handleDeleteArticle(id) {
-				this.deleteArticle({ id }).then(() => {
+				this.deleteArticle(id).then(() => {
 					this.getUserArticles(this.user.id, 0);
 				});
 			}

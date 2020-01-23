@@ -84,13 +84,7 @@
 			};
 		},
 		created() {
-			if (this.article) {
-				this.categoryId = this.article.categoryId;
-				this.imagePreview = this.articleImage;
-				this.title = this.article.title;
-				this.summary = this.article.summary;
-				this.content = this.article.content;
-			}
+			this.updateArticleData();
 		},
 		computed: {
 			...mapGetters([
@@ -110,6 +104,11 @@
 				return `${this.articlesDirectory}${this.article.image}`;
 			}
 		},
+		watch: {
+			article() {
+				this.updateArticleData();
+			}
+		},
 		methods: {
 			...mapActions('form', [
 				'setFormErrors',
@@ -120,6 +119,18 @@
 				'addArticle',
 				'updateArticle'
 			]),
+			/**
+			 * Updates the component data with the passed article data
+			 */
+			updateArticleData() {
+				if (this.article) {
+					this.categoryId = this.article.categoryId;
+					this.imagePreview = this.articleImage;
+					this.title = this.article.title;
+					this.summary = this.article.summary;
+					this.content = this.article.content;
+				}
+			},
 			/**
 			 * Clears the form errors related to this input
 			 * @param {Object} e

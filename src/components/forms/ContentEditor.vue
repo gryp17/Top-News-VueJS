@@ -165,6 +165,15 @@
 				};
 				this.$emit('focus', fakeEvent);
 			});
+		},
+		watch: {
+			/**
+			 * Manunally update the editor HTML when the value changes
+			 */
+			value() {
+				const qlEditor = $(this.$refs.editor).find('.ql-editor');
+				qlEditor.html(this.value);
+			}
 		}
 	};
 </script>

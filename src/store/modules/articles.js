@@ -38,6 +38,11 @@ export default {
 		}
 	},
 	actions: {
+		/**
+		 * Fetches the home articles
+		 * @param {Object} context
+		 * @returns {Promise}
+		 */
 		getHomeArticles(context) {
 			return ArticleService.getArticles('all news', '*', 6, 0).then((res) => {
 				context.commit('setHomeArticles', res.data);
@@ -48,6 +53,12 @@ export default {
 				});
 			});
 		},
+		/**
+		 * Fetches the search results
+		 * @param {Object} context
+		 * @param {Object} payload
+		 * @returns {Promise}
+		 */
 		search(context, { section, searchTerm, limit, offset }) {
 			//reset the search results when the first page is requested
 			if (offset === 0) {
@@ -63,6 +74,11 @@ export default {
 				});
 			});
 		},
+		/**
+		 * Fetches the latest articles
+		 * @param {Object} context
+		 * @returns {Promise}
+		 */
 		getLatestArticles(context) {
 			return ArticleService.getArticles('all news', '*', 5, 0).then((res) => {
 				context.commit('setLatestArticles', res.data);
@@ -73,6 +89,12 @@ export default {
 				});
 			});
 		},
+		/**
+		 * Fetches the most popular articles by period
+		 * @param {Object} context
+		 * @param {String} period
+		 * @returns {Promise}
+		 */
 		getPopularArticles(context, period) {
 			return ArticleService.getMostPopular(period, 5).then((res) => {
 				context.commit('setPopularArticles', {
@@ -86,6 +108,12 @@ export default {
 				});
 			});
 		},
+		/**
+		 * Fetches a single article
+		 * @param {Object} context
+		 * @param {Number} id
+		 * @returns {Promise}
+		 */
 		getArticle(context, id) {
 			return ArticleService.getArticleById(id).then((res) => {
 				context.commit('setArticle', res.data);
@@ -96,6 +124,12 @@ export default {
 				});
 			});
 		},
+		/**
+		 * Fetches the related (same author) articles
+		 * @param {Object} context
+		 * @param {Object} payload
+		 * @returns {Promise}
+		 */
 		getRelatedArticles(context, { authorId, limit, offset }) {
 			return ArticleService.getArticlesByAuthor(authorId, limit, offset).then((res) => {
 				context.commit('setRelatedArticles', res.data.articles);
@@ -106,6 +140,12 @@ export default {
 				});
 			});
 		},
+		/**
+		 * Fetches the articles by author
+		 * @param {Object} context
+		 * @param {Object} payload
+		 * @returns {Promise}
+		 */
 		getArticlesByAuthor(context, { id, limit, offset }) {
 			return ArticleService.getArticlesByAuthor(id, limit, offset).then((res) => {
 				context.commit('setArticlesByAuthor', res.data.articles);
@@ -116,7 +156,13 @@ export default {
 				});
 			});
 		},
-		deleteArticle(context, { id }) {
+		/**
+		 * Deletes the specified article
+		 * @param {Object} context
+		 * @param {Number} id
+		 * @returns {Promise}
+		 */
+		deleteArticle(context, id) {
 			return ArticleService.delete(id).then((res) => {
 				return res.data;
 			}).catch(() => {
@@ -125,6 +171,12 @@ export default {
 				});
 			});
 		},
+		/**
+		 * Adds a new article
+		 * @param {Object} context
+		 * @param {Object} data
+		 * @returns {Promise}
+		 */
 		addArticle(context, data) {
 			return ArticleService.create(data).then((res) => {
 				return res.data;
@@ -134,6 +186,12 @@ export default {
 				});
 			});
 		},
+		/**
+		 * Updates an article instance
+		 * @param {Object} context
+		 * @param {Object} payload
+		 * @returns {Promise}
+		 */
 		updateArticle(context, { id, data }) {
 			return ArticleService.update(id, data).then((res) => {
 				return res.data;

@@ -20,6 +20,11 @@ export default {
 		}
 	},
 	actions: {
+		/**
+		 * Clears a single form error field
+		 * @param {Object} context
+		 * @param {Object} payload
+		 */
 		clearFormError(context, { form, field }) {
 			context.commit('setFormError', {
 				form,
@@ -27,6 +32,11 @@ export default {
 				error: null
 			});
 		},
+		/**
+		 * Sets the form errors
+		 * @param {Object} context
+		 * @param {Object} payload
+		 */
 		setFormErrors(context, { form, errors }) {
 			Object.keys(errors).forEach((field) => {
 				context.commit('setFormError', {
@@ -36,6 +46,11 @@ export default {
 				});
 			});
 		},
+		/**
+		 * Resets the form errors
+		 * @param {Object} context
+		 * @param {String} form
+		 */
 		resetFormErrors(context, form) {
 			context.commit('resetFormErrors', form);
 		}

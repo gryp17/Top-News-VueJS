@@ -45,6 +45,11 @@ export default new Vuex.Store({
 		}
 	},
 	actions: {
+		/**
+		 * Fetches the config object
+		 * @param {Object} context
+		 * @returns {Promise}
+		 */
 		getConfig(context) {
 			return ConfigService.getConfig().then((res) => {
 				if (res.data) {
@@ -64,10 +69,18 @@ export default new Vuex.Store({
 				});
 			});
 		},
+		/**
+		 * Toggles the main menu
+		 * @param {Object} context
+		 */
 		toggleMainMenu(context) {
 			const opened = !context.state.mainMenuOpened;
 			context.commit('setMainMenuOpened', opened);
 		},
+		/**
+		 * Hides the main menu
+		 * @param {Object} context
+		 */
 		hideMainMenu(context) {
 			context.commit('setMainMenuOpened', false);
 		}
