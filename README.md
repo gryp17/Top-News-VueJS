@@ -1,6 +1,6 @@
 # Top-News-VueJS
 Basic news website built using VueJS and NodeJS. 
-This is an rewrite of the previous React and AngularJS versions of this project.
+This is a rewrite of the previous React and AngularJS versions of this project.
 
 ## Project setup
 ```
